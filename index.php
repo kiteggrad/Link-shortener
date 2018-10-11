@@ -1,6 +1,8 @@
 <?php
 
-require 'shortener.php';
+require_once 'Shortener.php';
+require_once 'MyException.php';
+require_once 'Logger.php';
 
 $short = false;
 $exception = false;
@@ -8,14 +10,20 @@ $exception = false;
 if(isset($_GET['go'])) {
     try {
         Shortener::go($_GET['go']);
-    } catch (\Throwable $e) {
+    } catch (\MyException $e) {
         $exception = $e->getMessage();
+    } catch (\Throwable $e) {
+        $exception = 'Ошибка на стороне сервера';
+        Logger::logException($e);
     }
 } elseif (isset($_POST['link'])) {
     try {
         $short = Shortener::new($_POST['link']);
-    } catch (\Throwable $e) {
+    } catch (\MyException $e) {
         $exception = $e->getMessage();
+    } catch (\Throwable $e) {
+        $exception = 'Ошибка на стороне сервера';
+        Logger::logException($e);
     }
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-require 'MyPDO.php';
+require 'DB.php';
 
 switch ($argv[1]) {
     case '-up':
@@ -30,20 +30,14 @@ function up()
         link VARCHAR(1024) UNIQUE
     ';
 
-    $dbh = MyPDO::getDBHandler();
-
-    $dbh->exec("
-            CREATE TABLE shortLinks($columns)
-        ");
+    $pdo = DB::getPDO();
+    $pdo->exec("CREATE TABLE links($columns)");
 }
 
 function down()
 {
-    $dbh = MyPDO::getDBHandler();
-
-    $dbh->exec("
-        DROP TABLE IF EXISTS shortLinks
-    ");
+    $pdo = DB::getPDO();
+    $pdo->exec("DROP TABLE IF EXISTS links");
 }
 
 function refresh()
