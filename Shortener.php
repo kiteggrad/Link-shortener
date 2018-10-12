@@ -83,8 +83,9 @@ class Shortener
     private static function validateURL(string $url)
     {
         $url = htmlentities($url);
+        $url = trim($url);
 
-        if(!preg_match('/^(https?:\/\/)?([\w\.]+)\.([a-z]{2,6}\.?)(\/[\w\.]*)*\/?$/' , $url)) {
+        if(!preg_match('/^(https?:\/\/)?([\w\.]+)\.([a-z]{2,6}\.?)(\/[\w\.?=+%-&]*)*\/?$/' , $url)) {
             throw new MyException("$url не является ссылкой");
         }
         if(!preg_match('@(http\://)|(https\://)@', $url)) {
