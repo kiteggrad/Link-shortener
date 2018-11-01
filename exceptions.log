@@ -1,6 +1,6 @@
-[11.10.18 12:45:35]
-    Message: Argument 1 passed to DB::saveLink() must be of the type string, null given, called in C:\OSPanel\domains\link-shortener.test\Shortener.php on line 36
-    File: C:\OSPanel\domains\link-shortener.test\DB.php
-    Line: 58
+[25.10.18 04:41:13]
+    Message: Class 'StorageAdapter' not found
+    File: C:\OSPanel\domains\link-shortener.test\Shortener.php
+    Line: 39
     Code: 0
 

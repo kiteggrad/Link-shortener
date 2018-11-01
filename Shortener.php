@@ -1,7 +1,9 @@
 <?php
 
-require_once 'DB.php';
+require_once 'Database/DB.php';
 require_once 'MyException.php';
+require_once 'Database/LinkMapper.php';
+require_once 'Database/StorageAdapter.php';
 
 class Shortener
 {
@@ -14,10 +16,12 @@ class Shortener
     public static function go(string $key)
     {
         $id = self::decodeKey($key);
-        $found = DB::getLink($id);
+        $mapper = new LinkMapper(new StorageAdapter(DB::getPDO()));
+
+        $found = $mapper->findById($id);
 
         if($found) {
-            self::redirect($found['link']);
+            self::redirect($found->getLink());
         } else {
             throw new MyException('Ссылка не найдена');
         }
@@ -33,7 +37,8 @@ class Shortener
     public static function new(string $link): string
     {
         $link = self::validateURL($link);
-        $id = DB::saveLink($link);
+        $mapper = new LinkMapper(new StorageAdapter(DB::getPDO()));
+        $id = $mapper->saveLink($link);
         $key = self::generateKey($id);
 
         return $_SERVER['HTTP_HOST'] . "?go=$key";
