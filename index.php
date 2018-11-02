@@ -38,7 +38,7 @@ if(isset($_GET['go'])) {
             <form action="/" method="post">
                 <?php if (!$exception) : ?>
                     <?php if (!$short) : ?>
-                        <input type="text" name="link" placeholder="Ссылка для сокращения">
+                        <input type="text" name="link" placeholder="Ссылка для сокращения" maxlength="1023">
                         <input type="submit">
                     <?php else: ?>
                         <p>Укороченная ссылка:</p>
