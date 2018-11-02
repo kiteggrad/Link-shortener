@@ -90,6 +90,9 @@ class Shortener
         $url = htmlentities($url);
         $url = trim($url);
 
+        if(iconv_strlen($url) > 1023) {
+            throw new MyException("Слишком длинная ссылка");
+        }
         if(!preg_match('@^(https?://)?([\w\.]+)\.([a-z]{2,6}\.?)(/[\S]*)*/?$@ui' , $url)) {
             throw new MyException("$url не является ссылкой");
         }
